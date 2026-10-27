@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="induztek_primary">#C9BEFF</color>
+    <color name="induztek_on_primary">#3A22A8</color>
+    <color name="induztek_primary_container">#3A22A8</color>
+    <color name="induztek_on_primary_container">#C9BEFF</color>
+    <color name="induztek_background">#14131A</color>
+    <color name="induztek_surface">#1F1D27</color>
+    <color name="induztek_text">#ECEAF4</color>
+</resources>
