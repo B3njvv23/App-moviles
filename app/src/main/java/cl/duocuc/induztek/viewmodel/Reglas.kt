@@ -99,6 +99,9 @@ object Reglas {
         return e
     }
 
+    fun evaluar(t: Tipo, p: Prueba, v: Map<String, Double>, max: Double = 0.0): Resultado? =
+        EvaluadoresPrueba.para(p).evaluar(t, v, max)
+
     fun vigentes(p: Protocolo) =
         p.mediciones
             .groupBy { it.prueba to it.elemento }
