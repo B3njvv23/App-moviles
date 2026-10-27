@@ -23,13 +23,21 @@ La interfaz está organizada en pantallas y componentes. Los modelos representan
 3. Seleccionar un emulador o dispositivo Android.
 4. Ejecutar el módulo `app`.
 
-## Verificación
+## Pruebas
 
-El proyecto incluye pruebas unitarias para validar reglas de acceso y la evaluación de mediciones. Para ejecutarlas desde la raíz:
+Pruebas unitarias:
 
 ```powershell
 .\gradlew.bat :app:testDebugUnitTest
 ```
+
+Pruebas instrumentadas con un emulador o dispositivo conectado:
+
+```powershell
+.\gradlew.bat :app:connectedDebugAndroidTest
+```
+
+Las pruebas instrumentadas revisan el recorrido de acceso y la persistencia relacional en SQLite, incluidos los identificadores y la evidencia fotográfica BLOB.
 
 ## Enlaces
 
