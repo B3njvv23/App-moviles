@@ -70,6 +70,27 @@ fun LoginScreen(
                 habilitado = !ocupado,
             )
         }
+        TarjetaSeccion("Accesos de demostración") {
+            Text("Datos ficticios del caso. Contraseña: Induztek2026!")
+            listOf(
+                    "Técnico" to "mgodoy@induztek.ejemplo",
+                    "Ingeniera" to "acontreras@induztek.ejemplo",
+                    "Jefe técnico" to "respinoza@induztek.ejemplo",
+                    "Cliente" to "mfuentes@envpacifico.ejemplo",
+                )
+                .forEach { (rol, mail) ->
+                    TextButton(
+                        onClick = {
+                            correo = mail
+                            clave = "Induztek2026!"
+                            limpiar()
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text("$rol · ${mail.substringBefore('@')}")
+                    }
+                }
+        }
         Text(stringResource(R.string.auth_offline), style = MaterialTheme.typography.bodySmall)
     }
 }

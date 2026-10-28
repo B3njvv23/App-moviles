@@ -31,7 +31,12 @@ constructor(app: Application, nombreDb: String = "induztek.db") : AndroidViewMod
                             app,
                             if (nombreDb == "induztek.db") "sesion" else "sesion_$nombreDb",
                         )
-                    _datos.value = db.cargar() ?: Datos()
+                    _datos.value =
+                        db.cargar()
+                            ?: run {
+                                db.precargar(Semilla.crear())
+                                requireNotNull(db.cargar())
+                            }
                     usuario =
                         datos.value.usuarios.firstOrNull {
                             it.id == preferencias.leer() && it.activo

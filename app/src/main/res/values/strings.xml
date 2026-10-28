@@ -2,7 +2,7 @@
     <string name="app_name">Induztek Terreno</string>
     <string name="cd_mostrar_contrasena">Mostrar contraseña</string>
     <string name="cd_ocultar_contrasena">Ocultar contraseña</string>
-    <!-- Acceso: textos compartidos por las pantallas Compose. -->
+    <!-- Acceso: textos compartidos por las pantallas -->
     <string name="auth_banner">PRUEBAS ELÉCTRICAS EN TERRENO</string>
     <string name="auth_brand">Induztek\nTerreno</string>
     <string name="auth_subtitle">Registra, compara y entrega el respaldo de cada visita.</string>

@@ -1,13 +1,12 @@
 package cl.duocuc.induztek
 
 import cl.duocuc.induztek.viewmodel.ValidacionAcceso
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Test
 
 class ValidacionAccesoTest {
     @Test
-    fun registroVacioIndicaCamposPendientes() {
+    fun registroVacioTieneErrorPorCampo() {
         assertEquals(
             setOf("nombre", "rut", "empresa", "correo", "clave", "confirmar"),
             ValidacionAcceso.validar(true, emptyMap()).keys,
@@ -15,26 +14,28 @@ class ValidacionAccesoTest {
     }
 
     @Test
-    fun recuperacionRevisaFormatoYConfirmacion() {
-        val errores = ValidacionAcceso.validar(
-            false,
-            mapOf("correo" to "correo-invalido", "clave" to "clave de prueba", "confirmar" to "otra clave"),
-        )
+    fun recuperacionExigeCodigoYConfirmacion() {
+        val errores =
+            ValidacionAcceso.validar(
+                false,
+                mapOf("correo" to "mal", "clave" to "corta", "confirmar" to "distinta"),
+            )
         assertEquals(setOf("correo", "codigo", "clave", "confirmar"), errores.keys)
     }
 
     @Test
-    fun recuperacionValidaNoSolicitaCamposDeRegistro() {
+    fun recuperacionValidaNoExigeDatosDeRegistro() {
         assertTrue(
             ValidacionAcceso.validar(
-                false,
-                mapOf(
-                    "correo" to "persona@example.test",
-                    "codigo" to "codigo-de-prueba",
-                    "clave" to "clave de prueba",
-                    "confirmar" to "clave de prueba",
-                ),
-            ).isEmpty()
+                    false,
+                    mapOf(
+                        "correo" to "cliente@empresa.cl",
+                        "codigo" to "secreto",
+                        "clave" to "Contraseña2026!",
+                        "confirmar" to "Contraseña2026!",
+                    ),
+                )
+                .isEmpty()
         )
     }
 }

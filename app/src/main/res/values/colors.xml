@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Paleta adaptada de MiRegistroAvatar a Induztek. -->
+    <!-- Paleta de colores para el tema Induztek. -->
     <color name="induztek_primary">#5B3FD9</color>
     <color name="induztek_on_primary">#FFFFFF</color>
     <color name="induztek_primary_container">#C9BEFF</color>
