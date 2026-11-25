@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.viewmodel
+// Aquí valido el inicio, el registro y la recuperación.
 
 object ValidacionAcceso {
     fun validar(registro: Boolean, v: Map<String, String>): Map<String, String> = buildMap {
@@ -17,9 +18,10 @@ object ValidacionAcceso {
             if (valor("nombre").isNotBlank() && valor("nombre").trim().length < 3)
                 put("nombre", "Ingresa tu nombre completo")
         }
-        if (valor("clave").isNotBlank() && valor("clave").length < 10)
-            put("clave", "Usa al menos 10 caracteres")
+        if (valor("clave").isNotBlank() && !Reglas.claveSegura(valor("clave")))
+            put("clave", "Usa 10 caracteres, mayúscula, número y símbolo")
         if (valor("confirmar").isNotBlank() && valor("confirmar") != valor("clave"))
             put("confirmar", "Las contraseñas no coinciden")
     }
+
 }

@@ -1,6 +1,8 @@
 package cl.duocuc.induztek.ui.components
+// Aquí pido una contraseña y muestro su nivel de seguridad.
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
@@ -8,6 +10,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -21,6 +24,7 @@ import cl.duocuc.induztek.R
 import cl.duocuc.induztek.ui.styles.EstilosCampo
 import cl.duocuc.induztek.ui.theme.Dimens
 import cl.duocuc.induztek.ui.theme.MiRegistroTheme
+import cl.duocuc.induztek.viewmodel.Reglas
 
 @Composable
 fun CampoContrasena(
@@ -31,17 +35,21 @@ fun CampoContrasena(
     onAlternarVisible: () -> Unit,
     modifier: Modifier = Modifier,
     error: String? = null,
+    mostrarSeguridad: Boolean = true,
 ) {
+    Column(modifier.fillMaxWidth()) {
     OutlinedTextField(
         value = valor,
         onValueChange = onValorCambia,
-        modifier = modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         label = { Text(etiqueta) },
         leadingIcon = {
             Icon(
-                painter = painterResource(R.drawable.ic_candado),
-                contentDescription = null,
+                painter = painterResource(if (error != null) R.drawable.ic_error else R.drawable.ic_candado),
+                contentDescription = if (error != null) "Campo con error" else null,
                 modifier = Modifier.size(Dimens.tamanoIcono),
+                tint = if (error != null) androidx.compose.material3.MaterialTheme.colorScheme.error
+                    else androidx.compose.material3.LocalContentColor.current,
             )
         },
         trailingIcon = {
@@ -69,6 +77,12 @@ fun CampoContrasena(
         shape = EstilosCampo.forma,
         colors = EstilosCampo.colores(),
     )
+    if (mostrarSeguridad && valor.isNotEmpty()) {
+        val avance = listOf(valor.length >= 10, valor.any(Char::isUpperCase), valor.any(Char::isDigit), valor.any { !it.isLetterOrDigit() }).count { it }
+        LinearProgressIndicator(progress = { avance / 4f }, modifier = Modifier.fillMaxWidth())
+        Text(if (Reglas.claveSegura(valor)) "Contraseña segura" else "Requiere 10 caracteres, mayúscula, número y símbolo")
+    }
+    }
 }
 
 @Preview(showBackground = true)

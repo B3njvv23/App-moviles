@@ -1,4 +1,5 @@
 package cl.duocuc.induztek
+// Aquí pruebo el flujo de AccesoNavegacionTest en Android.
 
 import android.graphics.Bitmap
 import androidx.activity.ComponentActivity

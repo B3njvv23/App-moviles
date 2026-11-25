@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.screens
+// Aquí muestro las mediciones y la evidencia del protocolo.
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*

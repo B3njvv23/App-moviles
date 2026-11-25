@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.viewmodel
+// Aquí manejo el inicio de sesión, el registro y la recuperación.
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -141,31 +142,35 @@ class AccesoViewModel(private val sesion: SesionViewModel) : ViewModel() {
             )
         val codigo = java.util.UUID.randomUUID().toString()
         val usuarioId = db.insertarUsuario(u)
-        db.meta("recuperacion_$usuarioId", Seguridad.hash(codigo, sal))
+        db.meta(
+            "recuperacion_$usuarioId",
+            Seguridad.hash(codigo, sal),
+        )
         sesion.recargar()
         return codigo
     }
 
     @Synchronized
     internal fun recuperarCuenta(correo: String, codigo: String, clave: String) {
-        require(clave.length >= 10) { "Usa al menos 10 caracteres" }
+        require(Reglas.claveSegura(clave)) {
+            "Usa 10 caracteres, mayúscula, número y símbolo"
+        }
         val u = sesion.datos.value.usuarios.firstOrNull { it.correo.equals(correo.trim(), true) }
         require(
             u != null &&
                 codigo.isNotBlank() &&
-                db.meta("recuperacion_${u.id}").orEmpty().let {
-                    it.isNotEmpty() &&
-                        MessageDigest.isEqual(
-                            it.toByteArray(),
-                            Seguridad.hash(codigo.trim(), u.sal).toByteArray(),
-                        )
+        db.meta("recuperacion_${u.id}").orEmpty().let { guardado ->
+                    guardado.isNotEmpty() && MessageDigest.isEqual(
+                        guardado.toByteArray(),
+                        Seguridad.hash(codigo.trim(), u.sal).toByteArray(),
+                    )
                 }
         ) {
             "Correo o código de recuperación incorrectos"
         }
         db.actualizarUsuario(u.copy(hash = Seguridad.hash(clave, u.sal)))
+        db.meta("recuperacion_${u.id}", "")
         sesion.recargar()
-        // El código no habilita una cuenta pendiente ni cambia su perfil.
     }
 
     private fun normalRut(s: String) = s.replace(".", "").replace("-", "").uppercase()

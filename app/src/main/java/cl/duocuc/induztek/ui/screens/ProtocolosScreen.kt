@@ -1,22 +1,32 @@
 package cl.duocuc.induztek.ui.screens
+// Aquí filtro y muestro los protocolos.
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.Modifier
+import cl.duocuc.induztek.R
 import cl.duocuc.induztek.model.*
 import cl.duocuc.induztek.ui.components.*
 import cl.duocuc.induztek.viewmodel.*
+import androidx.compose.runtime.LaunchedEffect
 
 @Composable
-fun ProtocolosScreen(ui: UiState, ir: (String) -> Unit) {
+fun ProtocolosScreen(ui: UiState, ir: (String) -> Unit, vm: ProtocolosViewModel) {
+    LaunchedEffect(Unit) { vm.cargarClima() }
     var estado by rememberSaveable { mutableStateOf("") }
     var cliente by rememberSaveable { mutableStateOf("") }
     var tecnico by rememberSaveable { mutableStateOf("") }
+    var busqueda by rememberSaveable { mutableStateOf("") }
     val d = ui.datos
     val esCliente = ui.usuario?.rol == Rol.CLIENTE
     Contenido {
         Titulo("Protocolos")
+        if (vm.clima.isNotBlank()) Text("Clima de referencia · ${vm.clima}", style = MaterialTheme.typography.bodySmall)
+        CampoTexto(busqueda, { busqueda = it }, "Buscar código, equipo o fecha", R.drawable.ic_buscar)
         if (!esCliente) {
             Selector(
                 "Estado",
@@ -47,7 +57,9 @@ fun ProtocolosScreen(ui: UiState, ir: (String) -> Unit) {
                     val i = d.instalaciones.first { it.id == e.instalacionId }
                     (estado.isBlank() || p.estado.name == estado) &&
                         (cliente.isBlank() || i.clienteId.toString() == cliente) &&
-                        (tecnico.isBlank() || p.creadorId.toString() == tecnico)
+                        (tecnico.isBlank() || p.creadorId.toString() == tecnico) &&
+                        (busqueda.isBlank() || "${p.id} ${p.fecha} ${e.tag} ${i.nombre}"
+                            .contains(busqueda.trim(), true))
                 }
                 .sortedByDescending { it.fecha }
         ps.forEach { p -> TarjetaProtocolo(p, d, esCliente) { ir("protocolo/${p.id}") } }

@@ -1,11 +1,14 @@
 package cl.duocuc.induztek.ui.components
+// Aquí reutilizo el componente Selector en las pantallas.
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import cl.duocuc.induztek.R
 import cl.duocuc.induztek.model.*
 import cl.duocuc.induztek.ui.components.*
 import cl.duocuc.induztek.viewmodel.*
@@ -63,11 +66,23 @@ fun Selector(
                 }
             }
         }
-        if (error != null)
-            Text(
-                error,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall,
-            )
+        if (error != null) {
+            Row(
+                verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_error),
+                    contentDescription = "Campo con error",
+                    modifier = Modifier.size(16.dp),
+                    tint = MaterialTheme.colorScheme.error,
+                )
+                Text(
+                    error,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
+        }
     }
 }

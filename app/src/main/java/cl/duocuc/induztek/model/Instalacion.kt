@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.model
+// Aquí guardo los datos de Instalacion.
 
 data class Instalacion(
     val id: Long = 0L,

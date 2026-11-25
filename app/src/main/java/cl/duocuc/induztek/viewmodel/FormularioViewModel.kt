@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.viewmodel
+// Aquí preparo y guardo los formularios.
 
 import androidx.lifecycle.ViewModel
 import cl.duocuc.induztek.data.*
@@ -635,7 +636,6 @@ class FormularioViewModel(
             p.mediciones.filterNot {
                 it.prueba == m.prueba && it.elemento == m.elemento && it.momento == m.momento
             }
-        // No mezclar una medición única con el par previa/posterior para el mismo elemento.
         require(
             existentes.none {
                 it.prueba == m.prueba &&

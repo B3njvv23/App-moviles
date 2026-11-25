@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.components
+// Aquí reutilizo el componente BotonSecundario en las pantallas.
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedButton

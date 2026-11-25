@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.styles
+// Aquí defino los estilos de la app.
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues

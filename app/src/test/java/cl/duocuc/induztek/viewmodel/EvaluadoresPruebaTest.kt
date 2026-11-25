@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.viewmodel
+// Aquí manejo los datos y las acciones de EvaluadoresPruebaTest.
 
 import cl.duocuc.induztek.model.*
 import org.junit.Assert.*

@@ -1,11 +1,45 @@
 package cl.duocuc.induztek.viewmodel
+// Aquí manejo las acciones de los protocolos.
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cl.duocuc.induztek.data.*
 import cl.duocuc.induztek.model.*
 import cl.duocuc.induztek.viewmodel.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
-class ProtocolosViewModel(private val sesion: SesionViewModel) : ViewModel() {
+class ProtocolosViewModel internal constructor(
+    private val sesion: SesionViewModel,
+    private val consultarClima: suspend () -> ClimaActual,
+) : ViewModel() {
+    constructor(sesion: SesionViewModel) : this(sesion, ApiInduztek::consultarClima)
+
+    var clima by mutableStateOf("")
+        private set
+
+    fun cargarClima() {
+        if (clima.isNotBlank()) return
+        viewModelScope.launch {
+            clima = runCatching {
+                val actual = withContext(Dispatchers.IO) { consultarClima() }
+                val estado = when (actual.weather_code) {
+                    0 -> "despejado"
+                    1, 2, 3 -> "parcialmente nublado"
+                    45, 48 -> "neblina"
+                    in 51..67 -> "lluvia ligera"
+                    in 71..86 -> "nieve"
+                    else -> "condiciones variables"
+                }
+                "Santiago: ${actual.temperature_2m} °C · $estado · viento ${actual.wind_speed_10m} km/h"
+            }.getOrElse { "Clima no disponible sin conexión" }
+        }
+    }
+
     val ui
         get() = sesion.ui
 

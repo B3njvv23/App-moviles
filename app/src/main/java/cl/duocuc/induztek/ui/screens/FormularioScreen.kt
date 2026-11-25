@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.screens
+// Aquí armo la pantalla de FormularioScreen.
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*

@@ -1,4 +1,5 @@
 package cl.duocuc.induztek
+// Aquí pruebo el flujo de SqliteRelacionalTest en Android.
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase

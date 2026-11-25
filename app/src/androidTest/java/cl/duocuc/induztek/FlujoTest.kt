@@ -1,4 +1,5 @@
 package cl.duocuc.induztek
+// Aquí pruebo el flujo de FlujoTest en Android.
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider

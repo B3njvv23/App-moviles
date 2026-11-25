@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.theme
+// Aquí defino el tema visual de la app.
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,7 +21,7 @@ private val EsquemaClaro =
         secondary = Secundario,
         onSecondary = Blanco,
         tertiary = Acento,
-        onTertiary = Blanco,
+        onTertiary = PrimarioOscuro,
         background = FondoClaro,
         onBackground = TextoOscuro,
         surface = SuperficieClara,
@@ -36,7 +37,7 @@ private val EsquemaOscuro =
         secondary = Secundario,
         onSecondary = Blanco,
         tertiary = Acento,
-        onTertiary = Blanco,
+        onTertiary = PrimarioOscuro,
         background = FondoOscuro,
         onBackground = TextoClaro,
         surface = SuperficieOscura,

@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.model
+// Aquí guardo los datos de Prueba.
 
 enum class Prueba(val texto: String) {
     AISLACION("Aislación"),

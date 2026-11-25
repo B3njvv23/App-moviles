@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.screens
+// Aquí armo la pantalla de VisitasScreen.
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

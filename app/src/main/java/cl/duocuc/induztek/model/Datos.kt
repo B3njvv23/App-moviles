@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.model
+// Aquí guardo los datos de Datos.
 
 data class Datos(
     val usuarios: List<Usuario> = emptyList(),

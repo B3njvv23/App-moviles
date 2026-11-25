@@ -1,9 +1,9 @@
 package cl.duocuc.induztek.viewmodel
+// Aquí valido los formularios antes de guardarlos.
 
 import cl.duocuc.induztek.model.*
 import java.time.LocalDate
 
-/** Validación de cada campo, incluidas las reglas que dependen de otros registros. */
 object ValidacionFormularios {
     private fun rutNormal(s: String) = s.filter { it.isLetterOrDigit() }.uppercase()
 
@@ -32,7 +32,6 @@ object ValidacionFormularios {
             if (visible && s(k).isNotBlank() && s(k) !in permitidas)
                 e[k] = "Selecciona una opción disponible"
         }
-        // Límites de entrada para evitar valores accidentales que luego no caben en el documento.
         v.forEach { (k, texto) ->
             val limite =
                 when (k) {

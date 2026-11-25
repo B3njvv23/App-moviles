@@ -1,8 +1,11 @@
 package cl.duocuc.induztek.native
+// Aquí creo los PDF y agrego las fotos del protocolo.
 
 import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
+import android.graphics.BitmapFactory
+import android.graphics.RectF
 import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
@@ -11,7 +14,6 @@ import cl.duocuc.induztek.model.*
 import cl.duocuc.induztek.viewmodel.Reglas
 import java.io.File
 
-/** Documento generado sin señal, guardado con SAF y compartido con permisos temporales. */
 object Documentos {
     fun lineas(d: Datos, visitaId: Long = 0L, protocoloId: Long = 0L): List<String> {
         val v =
@@ -104,7 +106,7 @@ object Documentos {
         }
     }
 
-    fun crear(context: Context, lineas: List<String>): File {
+    fun crear(context: Context, lineas: List<String>, fotografias: List<ByteArray> = emptyList()): File {
         val dir = File(context.cacheDir, "actas").apply { mkdirs() }
         val file = File(dir, "Induztek-${System.currentTimeMillis()}.pdf")
         val pdf = PdfDocument()
@@ -116,7 +118,6 @@ object Documentos {
         val rows = mutableListOf<String>()
         lineas.forEach { line ->
             var actual = ""
-            // También parte códigos UUID y palabras largas para no desbordar el margen.
             line.forEach { ch ->
                 if (paint.measureText(actual + ch) > 505f) {
                     rows.add(actual)
@@ -126,18 +127,38 @@ object Documentos {
             }
             rows.add(actual)
         }
-        rows.chunked(45).forEachIndexed { i, part ->
+        val partes = rows.chunked(45)
+        val fotos = fotografias.mapNotNull { BitmapFactory.decodeByteArray(it, 0, it.size) }
+        val paginas = partes.size + fotos.size
+        partes.forEachIndexed { i, part ->
             val page = pdf.startPage(PdfDocument.PageInfo.Builder(595, 842, i + 1).create())
-            paint.color = android.graphics.Color.rgb(35, 28, 67)
+            paint.color = android.graphics.Color.rgb(16, 42, 67)
             part.forEachIndexed { j, line -> page.canvas.drawText(line, 40f, 50f + j * 16, paint) }
             paint.color = android.graphics.Color.GRAY
             page.canvas.drawText(
-                "Induztek - Página ${i + 1} de ${(rows.size + 44) / 45}",
+                "Induztek - Página ${i + 1} de $paginas",
                 40f,
                 812f,
                 paint,
             )
             pdf.finishPage(page)
+        }
+        fotos.forEachIndexed { i, foto ->
+            val page = pdf.startPage(PdfDocument.PageInfo.Builder(595, 842, partes.size + i + 1).create())
+            paint.color = android.graphics.Color.rgb(16, 42, 67)
+            paint.textSize = 16f
+            paint.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
+            page.canvas.drawText("EVIDENCIA FOTOGRÁFICA ${i + 1}", 40f, 58f, paint)
+            val ancho = 515f
+            val alto = 710f
+            val escala = minOf(ancho / foto.width, alto / foto.height)
+            val destino = RectF(40f, 80f, 40f + foto.width * escala, 80f + foto.height * escala)
+            page.canvas.drawBitmap(foto, null, destino, Paint(Paint.ANTI_ALIAS_FLAG))
+            paint.textSize = 10f
+            paint.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
+            page.canvas.drawText("Induztek - Página ${partes.size + i + 1} de $paginas", 40f, 812f, paint)
+            pdf.finishPage(page)
+            foto.recycle()
         }
         file.outputStream().use { pdf.writeTo(it) }
         pdf.close()

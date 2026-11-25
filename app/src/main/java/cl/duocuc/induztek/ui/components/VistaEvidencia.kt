@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.components
+// Aquí reutilizo el componente VistaEvidencia en las pantallas.
 
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image

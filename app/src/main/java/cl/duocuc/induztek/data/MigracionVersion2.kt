@@ -1,10 +1,10 @@
 package cl.duocuc.induztek.data
+// Aquí actualizo los datos de la segunda versión.
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import java.io.File
 
-/** Conserva los datos anteriores y convierte IDs y referencias a claves numéricas. */
 internal object MigracionVersion2 {
     fun migrar(db: SQLiteDatabase, crear: (SQLiteDatabase) -> Unit) {
         val tablas =

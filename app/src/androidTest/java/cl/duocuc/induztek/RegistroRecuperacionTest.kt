@@ -1,4 +1,5 @@
 package cl.duocuc.induztek
+// Aquí pruebo el flujo de RegistroRecuperacionTest en Android.
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
@@ -24,8 +25,6 @@ class RegistroRecuperacionTest {
                 "clave" to "Prueba2026!",
                 "confirmar" to "Prueba2026!",
             )
-        // Los RUT del caso original son identificadores ficticios; se usa una empresa con RUT
-        // verificado para la prueba.
         repo.login("respinoza@induztek.ejemplo", "Induztek2026!")
         repo.cliente(
             cl.duocuc.induztek.model.Cliente(

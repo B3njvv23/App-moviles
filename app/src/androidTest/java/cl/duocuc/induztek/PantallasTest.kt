@@ -1,4 +1,5 @@
 package cl.duocuc.induztek
+// Aquí pruebo el flujo de PantallasTest en Android.
 
 import android.graphics.Bitmap
 import androidx.compose.ui.graphics.asAndroidBitmap

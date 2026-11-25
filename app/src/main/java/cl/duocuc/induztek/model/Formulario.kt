@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.model
+// Aquí guardo los datos de Formulario.
 
 data class Formulario(
     val titulo: String,

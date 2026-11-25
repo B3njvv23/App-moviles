@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.model
+// Aquí guardo los datos de Cliente.
 
 data class Cliente(
     val id: Long = 0L,

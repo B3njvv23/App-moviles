@@ -1,11 +1,11 @@
 package cl.duocuc.induztek
+// Aquí pruebo el flujo de EscenarioLocal en Android.
 
 import android.app.Application
 import android.content.Context
 import cl.duocuc.induztek.model.*
 import cl.duocuc.induztek.viewmodel.*
 
-/** Prepara los ViewModels para comprobar el flujo desde las pruebas instrumentadas. */
 internal class EscenarioLocal(context: Context, nombreDb: String = "induztek.db") {
     private val sesion = SesionViewModel(context.applicationContext as Application, nombreDb)
     private val acceso = AccesoViewModel(sesion)

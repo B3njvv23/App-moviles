@@ -1,4 +1,5 @@
 package cl.duocuc.induztek
+// Aquí pruebo el flujo de FormulariosCompletosTest en Android.
 
 import android.graphics.Bitmap
 import androidx.activity.ComponentActivity
@@ -18,9 +19,23 @@ import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 
-/** La actividad vacía muestra los mismos formularios con una base de prueba independiente. */
 class FormulariosCompletosTest {
     @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
+
+    @Test
+    fun selectorYContrasenaMuestranIconoConElMensajeDeError() {
+        compose.setContent {
+            MiRegistroTheme {
+                Contenido {
+                    Selector("Cliente", "", listOf("1" to "Empresa"), {}, "Selecciona un cliente")
+                    CampoContrasena("corta", {}, "Contraseña inicial", false, {}, error = "La contraseña es demasiado corta")
+                }
+            }
+        }
+        compose.onNodeWithText("Selecciona un cliente").assertExists()
+        compose.onNodeWithText("La contraseña es demasiado corta").assertExists()
+        compose.onAllNodesWithContentDescription("Campo con error", useUnmergedTree = true).assertCountEquals(2)
+    }
 
     @Test
     fun todosLosFormulariosMuestranErroresPorCampoYPermitenCorregir() {
@@ -293,7 +308,6 @@ class FormulariosCompletosTest {
                 vm.ui.value.formulario!!.errores.keys.all { it == "_general" },
             )
         }
-        // Los errores de campos ocultos desaparecen cuando cambia el estado de una prueba.
         compose.runOnIdle {
             vm.abrir("medicion", p.id.toString(), "AISLACION|AT-T")
             vm.valor("realizada", "no")
@@ -307,7 +321,6 @@ class FormulariosCompletosTest {
         assertFalse(vm.ui.value.formulario!!.errores.containsKey("motivo"))
         compose.runOnIdle { vm.valor("realizada", "si") }
         compose.onNodeWithTag("campo_motivo").assertDoesNotExist()
-        // Registro válido: se persiste y no solo desaparecen las etiquetas de error.
         val nuevoRut = "11.111.111-1"
         compose.runOnIdle {
             vm.abrir("cliente")

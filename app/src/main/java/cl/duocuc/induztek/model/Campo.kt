@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.model
+// Aquí guardo los datos de Campo.
 
 data class Campo(
     val clave: String,

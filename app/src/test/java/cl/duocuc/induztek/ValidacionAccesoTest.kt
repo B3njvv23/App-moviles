@@ -1,4 +1,5 @@
 package cl.duocuc.induztek
+// Aquí pruebo las reglas de ValidacionAccesoTest.
 
 import cl.duocuc.induztek.viewmodel.ValidacionAcceso
 import org.junit.Assert.*

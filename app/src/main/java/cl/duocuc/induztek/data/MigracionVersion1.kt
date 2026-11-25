@@ -1,11 +1,11 @@
 package cl.duocuc.induztek.data
+// Aquí actualizo los datos de la primera versión.
 
 import android.database.sqlite.SQLiteDatabase
 import cl.duocuc.induztek.model.*
 import org.json.JSONArray
 import org.json.JSONObject
 
-/** Solo lee las bases de la versión anterior para migrarlas a tablas relacionales. */
 internal object MigracionVersion1 {
     private val ids = linkedMapOf<String, Long>()
 

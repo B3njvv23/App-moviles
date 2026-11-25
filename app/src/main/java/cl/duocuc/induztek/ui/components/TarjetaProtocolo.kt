@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.components
+// Aquí reutilizo el componente TarjetaProtocolo en las pantallas.
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable

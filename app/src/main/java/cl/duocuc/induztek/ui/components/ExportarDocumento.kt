@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.components
+// Aquí guardo y comparto el PDF.
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -61,7 +62,10 @@ fun ExportarDocumento(
             try {
                 val file =
                     withContext(Dispatchers.IO) {
-                        Documentos.crear(context, Documentos.lineas(d, visitaId, protocoloId))
+                        val fotos = d.protocolos.filter {
+                            if (protocoloId > 0L) it.id == protocoloId else it.visitaId == visitaId
+                        }.mapNotNull { it.evidencia }
+                        Documentos.crear(context, Documentos.lineas(d, visitaId, protocoloId), fotos)
                     }
                 archivo = file.absolutePath
                 if (compartir) {

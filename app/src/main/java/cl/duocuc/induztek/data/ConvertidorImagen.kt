@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.data
+// Aquí convierto las fotos antes de guardarlas.
 
 import android.graphics.Bitmap
 import java.io.ByteArrayOutputStream

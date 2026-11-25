@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.data
+// Aquí preparo los datos de ejemplo para iniciar la app.
 
 import cl.duocuc.induztek.model.*
 

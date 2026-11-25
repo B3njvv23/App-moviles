@@ -1,22 +1,20 @@
 package cl.duocuc.induztek.viewmodel
+// Aquí calculo el resultado de las pruebas eléctricas.
 
 import cl.duocuc.induztek.model.Prueba
 import cl.duocuc.induztek.model.Resultado
 import cl.duocuc.induztek.model.Tipo
 import kotlin.math.abs
 
-/** Contrato utilizado por el flujo real de registro de mediciones. null exige revisión manual. */
 interface EvaluadorPrueba {
     fun evaluar(tipo: Tipo, valores: Map<String, Double>, maximoPlaca: Double = 0.0): Resultado?
 }
 
-/** Comparte la lectura de parámetros entre los criterios automáticos del dominio. */
 abstract class EvaluadorAutomatico : EvaluadorPrueba {
     protected fun lectura(valores: Map<String, Double>, clave: String): Double =
         requireNotNull(valores[clave]) { "Falta $clave" }
 }
 
-/** Plantilla común para pruebas cuyo resultado depende de una desviación porcentual. */
 abstract class EvaluadorPorDesviacion(
     private val limiteAprobado: Double,
     private val limiteObservado: Double,
@@ -85,7 +83,6 @@ class EvaluadorContactos : EvaluadorAutomatico() {
     }
 }
 
-/** El caso exige que el ingeniero determine el resultado de devanados. */
 class EvaluadorManual : EvaluadorPrueba {
     override fun evaluar(
         tipo: Tipo,
@@ -94,7 +91,6 @@ class EvaluadorManual : EvaluadorPrueba {
     ): Resultado? = null
 }
 
-/** Selecciona la estrategia; los consumidores dependen del contrato y no de clases concretas. */
 object EvaluadoresPrueba {
     private val evaluadores: Map<Prueba, EvaluadorPrueba> =
         mapOf(

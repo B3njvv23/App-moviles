@@ -1,4 +1,5 @@
 package cl.duocuc.induztek
+// Aquí inicio la app y aplico su tema.
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

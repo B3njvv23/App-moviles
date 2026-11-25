@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.components
+// Aquí reutilizo el componente BotonPrincipal en las pantallas.
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Column

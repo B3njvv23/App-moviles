@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.viewmodel
+// Aquí manejo los datos y las acciones de ValidacionFormulariosTest.
 
 import cl.duocuc.induztek.model.*
 import java.time.LocalDate

@@ -1,4 +1,5 @@
 package cl.duocuc.induztek
+// Aquí pruebo el flujo de LoginValidacionTest en Android.
 
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.collectAsState

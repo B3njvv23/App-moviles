@@ -7,3 +7,10 @@ local.properties
 **/target/
 /data/
 *.log
+
+*.jks
+keystore.properties
+*.mv.db
+*.trace.db
+*.apk
+

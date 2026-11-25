@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.screens
+// Aquí busco y filtro los equipos.
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -19,8 +20,10 @@ fun EquiposScreen(ui: UiState, ir: (String) -> Unit, form: AbrirFormulario) {
     val d = ui.datos
     val equipos =
         d.equipos.filter { e ->
+            val instalacion = d.instalaciones.firstOrNull { it.id == e.instalacionId }
+            val nombreCliente = d.clientes.firstOrNull { it.id == instalacion?.clienteId }?.nombre.orEmpty()
             (clase.isEmpty() || e.tipo.clasificacion == clase) &&
-                "$e ${d.instalaciones.firstOrNull { it.id == e.instalacionId }?.nombre}"
+                "${e.tag} ${e.serie} ${instalacion?.nombre} ${instalacion?.ubicacion} $nombreCliente"
                     .contains(busqueda, true)
         }
     Contenido {

@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.styles
+// Aquí defino los estilos de la app.
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme

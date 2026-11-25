@@ -1,4 +1,5 @@
 package cl.duocuc.induztek
+// Aquí pruebo el flujo de PersistenciaLocalTest en Android.
 
 import androidx.test.platform.app.InstrumentationRegistry
 import cl.duocuc.induztek.data.*

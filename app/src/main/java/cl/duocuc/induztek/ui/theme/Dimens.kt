@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.theme
+// Aquí defino el tema visual de la app.
 
 import androidx.compose.ui.unit.dp
 

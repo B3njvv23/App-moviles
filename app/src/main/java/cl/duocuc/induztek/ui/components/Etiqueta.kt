@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.components
+// Aquí reutilizo el componente Etiqueta en las pantallas.
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*

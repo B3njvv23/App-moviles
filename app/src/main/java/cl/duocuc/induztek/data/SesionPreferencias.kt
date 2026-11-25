@@ -1,9 +1,9 @@
 package cl.duocuc.induztek.data
+// Aquí guardo el identificador de sesión en el dispositivo.
 
 import android.content.Context
 import androidx.core.content.edit
 
-/** Conserva únicamente el identificador de la sesión en el dispositivo. */
 class SesionPreferencias(context: Context, nombre: String = "sesion") {
     private val prefs = context.getSharedPreferences(nombre, Context.MODE_PRIVATE)
 

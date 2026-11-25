@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.model
+// Aquí guardo los datos de Instrumento.
 
 data class Instrumento(
     val id: Long = 0L,

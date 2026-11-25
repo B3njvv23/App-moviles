@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.components
+// Aquí capturo y muestro la foto del protocolo.
 
 import android.Manifest
 import android.content.pm.PackageManager

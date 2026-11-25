@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.model
+// Aquí guardo los datos de Equipo.
 
 data class Equipo(
     val id: Long = 0L,

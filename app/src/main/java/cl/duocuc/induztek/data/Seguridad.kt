@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.data
+// Aquí genero el hash que uso para guardar contraseñas.
 
 import java.security.SecureRandom
 import java.util.Base64

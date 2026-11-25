@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.data
+// Aquí creo las tablas y hago las consultas de SQLite.
 
 import android.content.ContentValues
 import android.content.Context
@@ -7,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import cl.duocuc.induztek.model.*
 
-/** SQLite del sistema: tablas, columnas, ContentValues y consultas con Cursor. */
 class InduztekDbHelper(context: Context, nombre: String = "induztek.db") :
     SQLiteOpenHelper(context, nombre, null, VERSION_BD) {
 
@@ -798,10 +798,8 @@ class InduztekDbHelper(context: Context, nombre: String = "induztek.db") :
                     "clientes",
                 )
                 .forEach { db.execSQL("DROP TABLE $it") }
-            // La tabla meta se conserva y se vuelve a crear junto con el esquema nuevo.
             db.execSQL("ALTER TABLE meta RENAME TO meta_v1")
             onCreate(db)
-            // onUpgrade ya dispone de una base abierta; no se vuelve a abrir el helper.
             datos.clientes.forEach { db.insertOrThrow("clientes", null, valoresDeCliente(it)) }
             datos.usuarios.forEach { db.insertOrThrow("usuarios", null, valoresDeUsuario(it)) }
             datos.instalaciones.forEach {

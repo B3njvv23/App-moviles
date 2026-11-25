@@ -1,4 +1,5 @@
 package cl.duocuc.induztek
+// Aquí pruebo el flujo de RecursosNativosTest en Android.
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -29,7 +30,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/** Prueba real de permisos, Camera2 y DocumentsUI en la variante independiente .qa. */
 @RunWith(AndroidJUnit4::class)
 class RecursosNativosTest {
     @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()

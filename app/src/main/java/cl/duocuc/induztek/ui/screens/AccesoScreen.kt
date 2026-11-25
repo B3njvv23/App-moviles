@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.ui.screens
+// Aquí armo el registro y la recuperación de cuenta.
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -23,7 +24,6 @@ fun AccesoScreen(
     var empresa by rememberSaveable { mutableStateOf("") }
     var correo by rememberSaveable { mutableStateOf("") }
     var codigo by rememberSaveable { mutableStateOf("") }
-    // Las contraseñas no se guardan en el estado restaurable de Android.
     var clave by remember { mutableStateOf("") }
     var confirmar by remember { mutableStateOf("") }
     var visible by remember { mutableStateOf(false) }

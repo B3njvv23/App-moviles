@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.viewmodel
+// Aquí manejo la sesión, SQLite y los cambios de la app.
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -10,9 +11,17 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SesionViewModel
-@JvmOverloads
-constructor(app: Application, nombreDb: String = "induztek.db") : AndroidViewModel(app) {
+class SesionViewModel internal constructor(
+    app: Application,
+    nombreDb: String,
+    private val sincronizar: suspend (Datos) -> Unit,
+) : AndroidViewModel(app) {
+    @JvmOverloads
+    constructor(app: Application, nombreDb: String = "induztek.db") :
+        this(app, nombreDb, ApiInduztek::sincronizar)
+
+    private class CampoPerfilInvalido(val campo: String, mensaje: String) : IllegalArgumentException(mensaje)
+
     internal lateinit var db: InduztekDbHelper
     internal lateinit var preferencias: SesionPreferencias
     private val _datos = MutableStateFlow(Datos())
@@ -43,6 +52,7 @@ constructor(app: Application, nombreDb: String = "induztek.db") : AndroidViewMod
                         }
                 }
                 refrescar()
+                sincronizarConServicios()
             } catch (e: Exception) {
                 mensaje("No se pudo abrir la base local: ${e.message}")
             }
@@ -62,6 +72,7 @@ constructor(app: Application, nombreDb: String = "induztek.db") : AndroidViewMod
     fun accion(
         exito: String = "Cambios guardados en el dispositivo",
         errorEnFormulario: Boolean = false,
+        alGuardar: () -> Unit = {},
         bloque: () -> Unit,
     ) {
         if (_ui.value.ocupado) return
@@ -70,8 +81,12 @@ constructor(app: Application, nombreDb: String = "induztek.db") : AndroidViewMod
             try {
                 withContext(Dispatchers.IO) { bloque() }
                 refrescar()
+                sincronizarConServicios()
                 if (errorEnFormulario) _ui.update { it.copy(guardado = it.guardado + 1) }
+                alGuardar()
                 mensaje(exito)
+            } catch (e: CampoPerfilInvalido) {
+                marcarErroresPerfil(mapOf(e.campo to requireNotNull(e.message)))
             } catch (e: Exception) {
                 if (errorEnFormulario)
                     _ui.update {
@@ -99,6 +114,12 @@ constructor(app: Application, nombreDb: String = "induztek.db") : AndroidViewMod
         _ui.update(cambio)
     }
 
+    private fun sincronizarConServicios() {
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching { sincronizar(datos.value) }
+        }
+    }
+
     fun salir() {
         usuario = null
         preferencias.borrar()
@@ -113,6 +134,55 @@ constructor(app: Application, nombreDb: String = "induztek.db") : AndroidViewMod
     }
 
     internal fun actual() = requireNotNull(usuario) { "Inicia sesión" }
+
+    private fun marcarErroresPerfil(errores: Map<String, String>) {
+        _ui.update { it.copy(erroresPerfil = errores) }
+    }
+
+    fun limpiarErrorPerfil(campo: String) {
+        _ui.update { it.copy(erroresPerfil = it.erroresPerfil - campo) }
+    }
+
+    fun limpiarPerfil() = marcarErroresPerfil(emptyMap())
+
+    fun actualizarPerfil(nombre: String, correo: String, claveActual: String, claveNueva: String) {
+        if (_ui.value.ocupado) return
+        val u = usuario ?: return mensaje("Inicia sesión para editar tu perfil")
+        val nombreLimpio = nombre.trim()
+        val correoLimpio = correo.trim()
+        val cambiarClave = claveActual.isNotEmpty() || claveNueva.isNotEmpty()
+        val errores = buildMap {
+            if (nombreLimpio.length < 3) put("nombre", "Escribe al menos 3 caracteres")
+            if (!Reglas.correo(correoLimpio)) put("correo", "Ingresa un correo válido")
+            else if (datos.value.usuarios.any { it.id != u.id && it.correo.equals(correoLimpio, true) })
+                put("correo", "Este correo ya está registrado")
+            if (cambiarClave) {
+                if (claveActual.isBlank()) put("claveActual", "Ingresa tu contraseña actual")
+                if (!Reglas.claveSegura(claveNueva))
+                    put("claveNueva", "Usa 10 caracteres, mayúscula, número y símbolo")
+            }
+        }
+        marcarErroresPerfil(errores)
+        if (errores.isNotEmpty()) return
+
+        accion(
+            "Perfil actualizado",
+            alGuardar = { _ui.update { it.copy(perfilGuardado = it.perfilGuardado + 1) } },
+        ) {
+            if (cambiarClave && !java.security.MessageDigest.isEqual(
+                    Seguridad.hash(claveActual, u.sal).toByteArray(), u.hash.toByteArray(),
+                ))
+                throw CampoPerfilInvalido("claveActual", "La contraseña actual no coincide")
+            val actualizado = if (!cambiarClave) u.copy(nombre = nombreLimpio, correo = correoLimpio)
+            else {
+                val sal = Seguridad.sal()
+                u.copy(nombre = nombreLimpio, correo = correoLimpio, sal = sal, hash = Seguridad.hash(claveNueva, sal))
+            }
+            db.actualizarUsuario(actualizado)
+            usuario = actualizado
+            recargar()
+        }
+    }
 
     override fun onCleared() {
         if (::db.isInitialized) db.close()

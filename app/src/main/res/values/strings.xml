@@ -2,7 +2,7 @@
     <string name="app_name">Induztek Terreno</string>
     <string name="cd_mostrar_contrasena">Mostrar contraseña</string>
     <string name="cd_ocultar_contrasena">Ocultar contraseña</string>
-    <!-- Acceso: textos compartidos por las pantallas -->
+    <!-- Aquí guardo los textos de acceso y registro. -->
     <string name="auth_banner">PRUEBAS ELÉCTRICAS EN TERRENO</string>
     <string name="auth_brand">Induztek\nTerreno</string>
     <string name="auth_subtitle">Registra, compara y entrega el respaldo de cada visita.</string>
@@ -26,7 +26,7 @@
     <string name="field_recovery_code">Código de recuperación</string>
     <string name="field_new_password">Nueva contraseña</string>
     <string name="field_confirm_password">Confirmar contraseña</string>
-    <string name="password_hint">Usa al menos 10 caracteres. Puedes mostrar u ocultar cada contraseña.</string>
+    <string name="password_hint">Usa 10 caracteres, mayúscula, número y símbolo. Puedes mostrar u ocultar la contraseña.</string>
     <string name="register_submit">Solicitar cuenta</string>
     <string name="recovery_submit">Restablecer contraseña</string>
     <string name="back_login">Volver a iniciar sesión</string>

@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.model
+// Aquí guardo los datos de Protocolo.
 
 import java.time.LocalDate
 import java.util.UUID

@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.model
+// Aquí guardo los datos de UiState.
 
 data class UiState(
     val datos: Datos = Datos(),
@@ -11,4 +12,6 @@ data class UiState(
     val erroresLogin: Map<String, String> = emptyMap(),
     val erroresAcceso: Map<String, String> = emptyMap(),
     val resultadoAcceso: String = "",
+    val erroresPerfil: Map<String, String> = emptyMap(),
+    val perfilGuardado: Int = 0,
 )

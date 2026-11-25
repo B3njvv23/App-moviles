@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.navigation
+// Aquí conecto las pantallas y manejo la navegación.
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -183,7 +184,7 @@ fun AppNavegacion(vm: SesionViewModel) {
                     }
                     composable("inicio") {
                         val actual by vm.ui.collectAsStateWithLifecycle()
-                        InicioScreen(actual, ::ir, ::form)
+                        InicioScreen(actual, ::ir, ::form, vm::actualizarPerfil, vm::limpiarPerfil, vm::limpiarErrorPerfil)
                     }
                     composable("equipos") {
                         val actual by vm.ui.collectAsStateWithLifecycle()
@@ -213,7 +214,7 @@ fun AppNavegacion(vm: SesionViewModel) {
                     }
                     composable("protocolos") {
                         val actual by vm.ui.collectAsStateWithLifecycle()
-                        ProtocolosScreen(actual, ::ir)
+                        ProtocolosScreen(actual, ::ir, protocolos)
                     }
                     composable("protocolo/{id}") { e ->
                         val actual by vm.ui.collectAsStateWithLifecycle()

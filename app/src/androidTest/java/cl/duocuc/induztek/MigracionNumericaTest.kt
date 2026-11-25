@@ -1,4 +1,5 @@
 package cl.duocuc.induztek
+// Aquí pruebo el flujo de MigracionNumericaTest en Android.
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase

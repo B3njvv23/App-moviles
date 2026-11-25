@@ -1,11 +1,14 @@
 package cl.duocuc.induztek.ui.screens
+// Aquí armo la pantalla para iniciar sesión.
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.foundation.Image
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import cl.duocuc.induztek.R
@@ -27,6 +30,7 @@ fun LoginScreen(
     var visible by rememberSaveable { mutableStateOf(false) }
     Contenido {
         Spacer(Modifier.height(32.dp))
+        Image(painterResource(R.drawable.ic_logo), contentDescription = "Logo de Induztek", modifier = Modifier.size(72.dp))
         Etiqueta(stringResource(R.string.auth_banner))
         Titulo(stringResource(R.string.auth_brand), stringResource(R.string.auth_subtitle))
         TarjetaSeccion(stringResource(R.string.login_title)) {
@@ -69,27 +73,6 @@ fun LoginScreen(
                 Modifier.fillMaxWidth(),
                 habilitado = !ocupado,
             )
-        }
-        TarjetaSeccion("Accesos de demostración") {
-            Text("Datos ficticios del caso. Contraseña: Induztek2026!")
-            listOf(
-                    "Técnico" to "mgodoy@induztek.ejemplo",
-                    "Ingeniera" to "acontreras@induztek.ejemplo",
-                    "Jefe técnico" to "respinoza@induztek.ejemplo",
-                    "Cliente" to "mfuentes@envpacifico.ejemplo",
-                )
-                .forEach { (rol, mail) ->
-                    TextButton(
-                        onClick = {
-                            correo = mail
-                            clave = "Induztek2026!"
-                            limpiar()
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Text("$rol · ${mail.substringBefore('@')}")
-                    }
-                }
         }
         Text(stringResource(R.string.auth_offline), style = MaterialTheme.typography.bodySmall)
     }

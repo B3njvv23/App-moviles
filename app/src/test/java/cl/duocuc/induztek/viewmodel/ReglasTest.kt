@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.viewmodel
+// Aquí manejo los datos y las acciones de ReglasTest.
 
 import cl.duocuc.induztek.model.*
 import java.time.LocalDate
@@ -6,6 +7,14 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class ReglasTest {
+    @Test
+    fun contrasenaExigeLargoMayusculaNumeroYSymbolo() {
+        assertTrue(Reglas.claveSegura("Induztek2026!"))
+        assertFalse(Reglas.claveSegura("induztek2026"))
+        assertFalse(Reglas.claveSegura("InduztekSolo!"))
+        assertFalse(Reglas.claveSegura("Ab1!"))
+    }
+
     @Test
     fun rutConDigitoVerificador() {
         assertTrue(Reglas.rut("17.284.519-3"))

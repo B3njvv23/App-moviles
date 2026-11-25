@@ -1,11 +1,11 @@
 package cl.duocuc.induztek.viewmodel
+// Aquí valido los datos y aplico las reglas de las pruebas.
 
 import cl.duocuc.induztek.model.*
 import java.time.DayOfWeek
 import java.time.LocalDate
 import kotlin.math.abs
 
-/** Funciones puras: validación y criterios del caso independientes de Compose y Android. */
 object Reglas {
     fun numero(s: String) = s.trim().replace(",", ".").toDoubleOrNull()?.takeIf { it.isFinite() }
 
@@ -23,6 +23,9 @@ object Reglas {
     }
 
     fun correo(s: String) = Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$").matches(s)
+
+    fun claveSegura(clave: String) = clave.length >= 10 && clave.any(Char::isUpperCase) &&
+        clave.any(Char::isDigit) && clave.any { !it.isLetterOrDigit() }
 
     fun pruebas(t: Tipo) =
         when (t) {
@@ -221,7 +224,8 @@ object Reglas {
             )
                 e["max"] = "Indica el máximo de placa mayor a cero"
         }
-        if (tipo == "usuario" && s("clave").length < 10) e["clave"] = "Mínimo 10 caracteres"
+        if (tipo == "usuario" && !claveSegura(s("clave")))
+            e["clave"] = "Usa 10 caracteres, mayúscula, número y símbolo"
         return e
     }
 }

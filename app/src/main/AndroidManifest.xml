@@ -1,7 +1,9 @@
+<!-- Aquí declaro permisos, ícono, pantalla y proveedor de archivos. -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+ <uses-permission android:name="android.permission.INTERNET"/>
  <uses-permission android:name="android.permission.CAMERA"/>
  <uses-feature android:name="android.hardware.camera" android:required="false"/>
- <application android:label="${appLabel}" android:theme="@style/Theme.Induztek" android:allowBackup="false" android:icon="@drawable/ic_check">
+ <application android:label="${appLabel}" android:theme="@style/Theme.Induztek" android:allowBackup="false" android:usesCleartextTraffic="${allowCleartext}" android:icon="@drawable/ic_launcher">
   <activity android:name=".MainActivity" android:exported="true" android:windowSoftInputMode="adjustResize">
    <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
   </activity>

@@ -1,4 +1,5 @@
 package cl.duocuc.induztek
+// Aquí pruebo el flujo de IdentificadorPrueba en Android.
 
 private val secuenciaPrueba = java.util.concurrent.atomic.AtomicLong(10000L)
 

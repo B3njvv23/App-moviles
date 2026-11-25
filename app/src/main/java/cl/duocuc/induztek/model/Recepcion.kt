@@ -1,4 +1,5 @@
 package cl.duocuc.induztek.model
+// Aquí guardo los datos de Recepcion.
 
 data class Recepcion(
     val nombre: String,

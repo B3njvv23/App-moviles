@@ -1,10 +1,10 @@
 package cl.duocuc.induztek
+// Aquí pruebo el flujo de DatosVersion1Fixture en Android.
 
 import cl.duocuc.induztek.model.*
 import org.json.JSONArray
 import org.json.JSONObject
 
-/** Conversión explícita con la API JSON de Android, sin librerías externas. */
 object DatosVersion1Fixture {
     private fun textos(j: JSONObject, campo: String): List<String> {
         val a = j.optJSONArray(campo) ?: JSONArray()
